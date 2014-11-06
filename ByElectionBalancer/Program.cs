@@ -8,54 +8,66 @@ namespace ByElectionBalancer
     {
         private static readonly Card[] phCards =
         {
-            new Card(5, false),
-            new Card(-5, false),
-            new Card(-2, false),
-            new Card(-3, true),
-            new Card(-3, true),
-            new Card(-2, true),
-            new Card(2, true),
-            new Card(5, true),
-            new Card(3, true)
+            new IncreasesVotesCard(5),
+
+            new DecreasesVotesCard(5),
+            new DecreasesVotesCard(2),
+
+            new OtherPlayerStealsVotesCard(3),
+            new OtherPlayerStealsVotesCard(3),
+            new OtherPlayerStealsVotesCard(2),
+
+            new StealsAdditionalVotesCard(2),
+            new StealsAdditionalVotesCard(5),
+            new StealsAdditionalVotesCard(3)
         };
 
         private static readonly Card[] dtdCards =
         {
-            new Card(2, false),
-            new Card(5, false),
-            new Card(-2, false),
-            new Card(-3, false),
-            new Card(-2, true),
-            new Card(-5, true),
-            new Card(-3, true),
-            new Card(5, true),
-            new Card(3, true)
+            new IncreasesVotesCard(2),
+            new IncreasesVotesCard(5),
+
+            new DecreasesVotesCard(2),
+            new DecreasesVotesCard(3),
+
+            new OtherPlayerStealsVotesCard(2),
+            new OtherPlayerStealsVotesCard(5),
+            new OtherPlayerStealsVotesCard(3),
+
+            new StealsAdditionalVotesCard(5),
+            new StealsAdditionalVotesCard(3)
         };
 
         private static readonly Card[] iCards =
         {
-            new Card(3, false),
-            new Card(2, false),
-            new Card(5, false),
-            new Card(-4, false),
-            new Card(-3, false),
-            new Card(-3, false),
-            new Card(-3, true),
-            new Card(-2, true),
-            new Card(3, true)
+            new IncreasesVotesCard(3),
+            new IncreasesVotesCard(2),
+            new IncreasesVotesCard(5),
+
+            new DecreasesVotesCard(4),
+            new DecreasesVotesCard(3),
+            new DecreasesVotesCard(3),
+
+            new OtherPlayerStealsVotesCard(3),
+            new OtherPlayerStealsVotesCard(2),
+
+            new StealsAdditionalVotesCard(3)
         };
 
         private static readonly Card[] hCards =
         {
-            new Card(5, false),
-            new Card(2, false),
-            new Card(-3, false),
-            new Card(-3, false),
-            new Card(-2, true),
-            new Card(-2, true),
-            new Card(-5, true),
-            new Card(3, true),
-            new Card(5, true)
+            new IncreasesVotesCard(5),
+            new IncreasesVotesCard(2),
+
+            new DecreasesVotesCard(3),
+            new DecreasesVotesCard(3),
+
+            new OtherPlayerStealsVotesCard(2),
+            new OtherPlayerStealsVotesCard(2),
+            new OtherPlayerStealsVotesCard(5),
+
+            new StealsAdditionalVotesCard(3),
+            new StealsAdditionalVotesCard(5)
         };
 
         private static readonly Suit[] suits =
@@ -71,7 +83,7 @@ namespace ByElectionBalancer
             foreach (var suit in suits)
             {
                 Console.WriteLine("----");
-                Console.WriteLine(suit.Name);
+                Console.WriteLine("{0} (base value: {1})", suit.Name, suit.BaseValue);
                 Console.WriteLine("");
 
                 var results = new List<Result>();
