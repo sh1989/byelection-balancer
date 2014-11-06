@@ -46,11 +46,11 @@ namespace ByElectionBalancer
 
             if (StolenFromThisDeck > 0)
             {
-                stolenFromDeckResult = string.Format(" ({0} stolen from this deck", StolenFromThisDeck);
+                stolenFromDeckResult = string.Format(" ({0} stolen from this deck)", StolenFromThisDeck);
             }
             if (StolenFromOthers > 0)
             {
-                stolenFromOthersResult = string.Format(" ({0} stolen from another player", StolenFromOthers);
+                stolenFromOthersResult = string.Format(" ({0} stolen from another player)", StolenFromOthers);
             }
 
             Console.WriteLine(baseResult + stolenFromDeckResult + stolenFromOthersResult);

@@ -88,12 +88,14 @@ namespace ByElectionBalancer
 
                 var results = new List<Result>();
 
-                var permutations = AllPermutations(suit.Cards);
+                IEnumerable<IEnumerable<Card>> permutations = suit.Cards.Permute(2);
                 foreach (var combo in permutations)
                 {
                     var tally = new Result(suit.BaseValue);
-                    tally.Add(combo.Item1);
-                    tally.Add(combo.Item2);
+                    foreach (var result in combo)
+                    {
+                        tally.Add(result);
+                    }
                     tally.PrintResult();
                     results.Add(tally);
                 }
@@ -109,21 +111,7 @@ namespace ByElectionBalancer
 
         }
 
-        private static IEnumerable<Tuple<Card, Card>> AllPermutations(IList<Card> cards)
-        {
-            var perms = new List<Tuple<Card, Card>>();
-            for (var i = 0; i < cards.Count - 1; i++) // loop through all but the last
-            {
-                var first = cards[i];
-                for (var j = i + 1; j < cards.Count; j++) // loop from the next to the last
-                {
-                    perms.Add(new Tuple<Card, Card>(first, cards[j]));
-                }
-            }
-            return perms;
-        }
-
-        private static int Average(Func<Result, int> valueToSum, List<Result> results)
+        private static int Average(Func<Result, int> valueToSum, IReadOnlyCollection<Result> results)
         {
             return results.Sum(valueToSum) / results.Count;
         }
