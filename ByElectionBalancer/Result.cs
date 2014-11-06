@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace ByElectionBalancer
 {
     public class Result
     {
+        private readonly List<Card> cards; 
         private readonly int baseValue;
         private int modifications;
 
         public Result(int baseValue)
         {
             this.baseValue = baseValue;
+            cards = new List<Card>();
         }
 
         public void Add(Card c)
@@ -27,6 +32,7 @@ namespace ByElectionBalancer
             }
 
             modifications += c.Value;
+            cards.Add(c);
         }
 
         public int VotesScored
@@ -40,20 +46,10 @@ namespace ByElectionBalancer
 
         public void PrintResult()
         {
-            var baseResult = string.Format("{0} votes", baseValue + modifications);
-            var stolenFromDeckResult = "";
-            var stolenFromOthersResult = "";
-
-            if (StolenFromThisDeck > 0)
-            {
-                stolenFromDeckResult = string.Format(" ({0} stolen from this deck)", StolenFromThisDeck);
-            }
-            if (StolenFromOthers > 0)
-            {
-                stolenFromOthersResult = string.Format(" ({0} stolen from another player)", StolenFromOthers);
-            }
-
-            Console.WriteLine(baseResult + stolenFromDeckResult + stolenFromOthersResult);
+            var builder = new StringBuilder();
+            builder.AppendFormat("{0} votes: ", baseValue + modifications);
+            builder.Append(string.Join(", ", cards.Select(c => c.ToString())));
+            Console.WriteLine(builder.ToString());
         }
     }
 }

@@ -100,15 +100,31 @@ namespace ByElectionBalancer
                     results.Add(tally);
                 }
 
-                Console.WriteLine("Average votes won: {0}", Average(x => x.VotesScored, results));
-                Console.WriteLine("Average votes stolen from deck: {0}", Average(x => x.StolenFromThisDeck, results));
-                Console.WriteLine("Average votes stolen from other players: {0}", Average(x => x.StolenFromOthers, results));
+                Console.WriteLine("");
+
+                Console.WriteLine("{0} permutations, {1} are negative, {2} are positive",
+                    results.Count,
+                    results.Count(x => x.VotesScored < 0),
+                    results.Count(x => x.VotesScored > 0));
+
+                Console.WriteLine("Votes won: min = {0}, average = {1}, max = {2}",
+                    results.Min(x => x.VotesScored),
+                    Average(x => x.VotesScored, results),
+                    results.Max(x => x.VotesScored));
+
+                Console.WriteLine("Stolen by others: min = {0}, average = {1}, max = {2}",
+                    results.Min(x => x.StolenFromThisDeck),
+                    Average(x => x.StolenFromThisDeck, results),
+                    results.Max(x => x.StolenFromThisDeck));
+
+                Console.WriteLine("Stolen from others: min = {0}, average = {1}, max = {2}",
+                    results.Min(x => x.StolenFromOthers),
+                    Average(x => x.StolenFromOthers, results),
+                    results.Max(x => x.StolenFromOthers));
 
                 Console.WriteLine("");
             }
-
             Console.ReadKey();
-
         }
 
         private static int Average(Func<Result, int> valueToSum, IReadOnlyCollection<Result> results)
