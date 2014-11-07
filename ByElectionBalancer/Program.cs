@@ -106,10 +106,11 @@ namespace ByElectionBalancer
                 }
                 Console.WriteLine("");
 
-                Console.WriteLine("{0} permutations, {1} are negative, {2} are positive",
+                Console.WriteLine("{0} permutations, {1:0.##}% are negative, {2:0.##}% are positive, {3:0.##}% score nothing",
                     results.Count,
-                    results.Count(x => x.VotesScored < 0),
-                    results.Count(x => x.VotesScored > 0));
+                    Percentage(x => x.VotesScored < 0, results),
+                    Percentage(x => x.VotesScored > 0, results),
+                    Percentage(x => x.VotesScored == 0, results));
 
                 Console.WriteLine("Votes won: min = {0}, average = {1}, max = {2}",
                     results.Min(x => x.VotesScored),
@@ -136,5 +137,10 @@ namespace ByElectionBalancer
             return results.Sum(valueToSum) / results.Count;
         }
 
+        private static double Percentage(Func<Result, bool> predicate, IReadOnlyCollection<Result> results)
+        {
+            var matches = (double) results.Count(predicate);
+            return (matches / results.Count) * 100;
+        }
     }
 }
