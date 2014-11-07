@@ -44,12 +44,12 @@ namespace ByElectionBalancer
 
         public int StolenFromOthers { get; private set; }
 
-        public void PrintResult()
+        public override string ToString()
         {
             var builder = new StringBuilder();
             builder.AppendFormat("{0} votes: ", baseValue + modifications);
             builder.Append(string.Join(", ", cards.Select(c => c.ToString())));
-            Console.WriteLine(builder.ToString());
+            return builder.ToString();
         }
     }
 }

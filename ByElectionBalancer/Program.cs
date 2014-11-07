@@ -96,10 +96,14 @@ namespace ByElectionBalancer
                     {
                         tally.Add(result);
                     }
-                    tally.PrintResult();
                     results.Add(tally);
                 }
 
+                var resultsInOrder = results.OrderByDescending(x => x.VotesScored);
+                foreach (var result in resultsInOrder)
+                {
+                    Console.WriteLine(result);
+                }
                 Console.WriteLine("");
 
                 Console.WriteLine("{0} permutations, {1} are negative, {2} are positive",
