@@ -112,29 +112,41 @@ namespace ByElectionBalancer
                     Percentage(x => x.VotesScored > 0, results),
                     Percentage(x => x.VotesScored == 0, results));
 
-                Console.WriteLine("Votes won: min = {0}, average = {1}, max = {2}",
+                Console.WriteLine("Votes won: min = {0}, max = {1}. Average = {2:0.##}, Mode = {3}",
                     results.Min(x => x.VotesScored),
-                    Average(x => x.VotesScored, results),
-                    results.Max(x => x.VotesScored));
+                    results.Max(x => x.VotesScored),
+                    results.Average(x => x.VotesScored),
+                    String.Join(",", Modes(x => x.VotesScored, results)));
 
-                Console.WriteLine("Stolen by others: min = {0}, average = {1}, max = {2}",
+                Console.WriteLine("Stolen by others: min = {0}, max = {1}. Average = {2:0.##}, Mode = {3}",
                     results.Min(x => x.StolenFromThisDeck),
-                    Average(x => x.StolenFromThisDeck, results),
-                    results.Max(x => x.StolenFromThisDeck));
+                    results.Max(x => x.StolenFromThisDeck),
+                    results.Average(x => x.StolenFromThisDeck),
+                    String.Join(",", Modes(x => x.StolenFromThisDeck, results)));
 
-                Console.WriteLine("Stolen from others: min = {0}, average = {1}, max = {2}",
+                Console.WriteLine("Stolen from others: min = {0}, max = {1}. Average = {2:0.##}, Mode = {3}",
                     results.Min(x => x.StolenFromOthers),
-                    Average(x => x.StolenFromOthers, results),
-                    results.Max(x => x.StolenFromOthers));
+                    results.Max(x => x.StolenFromOthers),
+                    results.Average(x => x.StolenFromOthers),
+                    String.Join(",", Modes(x => x.StolenFromOthers, results)));
 
                 Console.WriteLine("");
             }
             Console.ReadKey();
         }
 
-        private static int Average(Func<Result, int> valueToSum, IReadOnlyCollection<Result> results)
+        private static IEnumerable<int> Modes(Func<Result, int> predicate, IReadOnlyCollection<Result> results)
         {
-            return results.Sum(valueToSum) / results.Count;
+            var modes = results
+                .GroupBy(predicate)
+                .Select(x => new {Value = x.Key, Frequency = x.Count()})
+                .ToList();
+
+            var maxFrequency = modes.Max(x => x.Frequency);
+
+            return modes.Where(x => x.Frequency == maxFrequency && maxFrequency > 1)
+                .Select(x => x.Value)
+                .OrderBy(x => x);
         }
 
         private static double Percentage(Func<Result, bool> predicate, IReadOnlyCollection<Result> results)
