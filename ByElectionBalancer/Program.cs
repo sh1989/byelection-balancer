@@ -93,12 +93,10 @@ namespace ByElectionBalancer
                     results.Add(tally);
                 }
 
-                var resultsInOrder = results.OrderByDescending(x => x.VotesScored);
-                foreach (var result in resultsInOrder)
+                if (args.Contains("-v"))
                 {
-                    Console.WriteLine(result);
+                    PrintPermutations(x => x.VotesScored, results);
                 }
-                Console.WriteLine("");
 
                 Console.WriteLine("{0} permutations, {1:0.##}% are negative, {2:0.##}% are positive, {3:0.##}% score nothing",
                     results.Count,
@@ -112,6 +110,16 @@ namespace ByElectionBalancer
                 Console.WriteLine("");
             }
             Console.ReadKey();
+        }
+
+        private static void PrintPermutations(Func<Result, int> predicate, IEnumerable<Result> results)
+        {
+            var resultsInOrder = results.OrderByDescending(predicate);
+            foreach (var result in resultsInOrder)
+            {
+                Console.WriteLine(result);
+            }
+            Console.WriteLine("");
         }
 
         private static void PrintStats(string title, Func<Result, int> predicate, IEnumerable<Result> results)
