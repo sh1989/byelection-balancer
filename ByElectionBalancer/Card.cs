@@ -48,15 +48,4 @@ namespace ByElectionBalancer
             return string.Format("{0} stolen", -Value);
         }
     }
-
-    public class StealsAdditionalVotesCard : Card
-    {
-        public StealsAdditionalVotesCard(int howMuch)
-            : base(howMuch, true) { }
-
-        public override string ToString()
-        {
-            return string.Format("{0} votewinners", Value);
-        }
-    }
 }

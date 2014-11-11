@@ -21,14 +21,7 @@ namespace ByElectionBalancer
         {
             if (c.StealsVotes)
             {
-                if (c.Value > 0)
-                {
-                    StolenFromOthers += c.Value;
-                }
-                else
-                {
-                    StolenFromThisDeck += (-c.Value);
-                }
+                StolenFromThisDeck += (-c.Value);
             }
 
             modifications += c.Value;
@@ -41,8 +34,6 @@ namespace ByElectionBalancer
         }
 
         public int StolenFromThisDeck { get; private set; }
-
-        public int StolenFromOthers { get; private set; }
 
         public override string ToString()
         {
