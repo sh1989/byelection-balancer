@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ByElectionBalancer.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,76 +7,16 @@ namespace ByElectionBalancer
 {
     public class Program
     {
-        private static readonly Card[] paCards =
-        {
-            new IncreasesVotesCard(7),
-            new IncreasesVotesCard(5),
-            new IncreasesVotesCard(4), 
-
-            new DecreasesVotesCard(5),
-            new DecreasesVotesCard(3),
-
-            new OtherPlayerStealsVotesCard(4),
-            new OtherPlayerStealsVotesCard(7),
-            new OtherPlayerStealsVotesCard(4),
-            new OtherPlayerStealsVotesCard(4),
-        };
-
-        private static readonly Card[] dtdCards =
-        {
-            new IncreasesVotesCard(6),
-            new IncreasesVotesCard(5),
-            new IncreasesVotesCard(4),
-
-            new DecreasesVotesCard(7),
-            new DecreasesVotesCard(6),
-            new DecreasesVotesCard(4),
-            new DecreasesVotesCard(3),
-
-            new OtherPlayerStealsVotesCard(5),
-            new OtherPlayerStealsVotesCard(2)
-        };
-
-        private static readonly Card[] iCards =
-        {
-            new IncreasesVotesCard(6),
-            new IncreasesVotesCard(5),
-            new IncreasesVotesCard(4),
-
-            new DecreasesVotesCard(7),
-            new DecreasesVotesCard(6),
-            new DecreasesVotesCard(4),
-            new DecreasesVotesCard(3),
-
-            new OtherPlayerStealsVotesCard(5),
-            new OtherPlayerStealsVotesCard(2)
-        };
-
-        private static readonly Card[] hCards =
-        {
-            new IncreasesVotesCard(7),
-            new IncreasesVotesCard(5),
-            new IncreasesVotesCard(4), 
-
-            new DecreasesVotesCard(5),
-            new DecreasesVotesCard(3),
-
-            new OtherPlayerStealsVotesCard(4),
-            new OtherPlayerStealsVotesCard(7),
-            new OtherPlayerStealsVotesCard(4),
-            new OtherPlayerStealsVotesCard(4)
-        };
-
-        private static readonly Suit[] suits =
-        {
-            new Suit("Public Appearance", 7, paCards),
-            new Suit("Door to door", 7, dtdCards),
-            new Suit("Interview", 7, iCards),
-            new Suit("Hustings", 7, hCards)
-        };
-
         static void Main(string[] args)
         {
+            var suits = new Suit[]
+            {
+                new PublicAppearance(),
+                new DoorToDoor(),
+                new Interview(),
+                new Rally()
+            };
+
             foreach (var suit in suits)
             {
                 Console.WriteLine("----{0} (base value: {1})----", suit.Name, suit.BaseValue);

@@ -2,7 +2,7 @@
 
 namespace ByElectionBalancer
 {
-    public class Suit
+    public abstract class Suit
     {
         private readonly String name;
         public String Name { get { return name; } }
