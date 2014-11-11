@@ -63,7 +63,7 @@ namespace ByElectionBalancer
             new OtherPlayerStealsVotesCard(4),
             new OtherPlayerStealsVotesCard(7),
             new OtherPlayerStealsVotesCard(4),
-            new OtherPlayerStealsVotesCard(4),
+            new OtherPlayerStealsVotesCard(4)
         };
 
         private static readonly Suit[] suits =
@@ -82,7 +82,7 @@ namespace ByElectionBalancer
 
                 var results = new List<Result>();
 
-                IEnumerable<IEnumerable<Card>> permutations = suit.Cards.Permute(3);
+                var permutations = suit.Cards.Permute(3);
                 foreach (var combo in permutations)
                 {
                     var tally = new Result(suit.BaseValue);
@@ -93,12 +93,12 @@ namespace ByElectionBalancer
                     results.Add(tally);
                 }
 
-                /*var resultsInOrder = results.OrderByDescending(x => x.VotesScored);
+                var resultsInOrder = results.OrderByDescending(x => x.VotesScored);
                 foreach (var result in resultsInOrder)
                 {
                     Console.WriteLine(result);
                 }
-                Console.WriteLine("");*/
+                Console.WriteLine("");
 
                 Console.WriteLine("{0} permutations, {1:0.##}% are negative, {2:0.##}% are positive, {3:0.##}% score nothing",
                     results.Count,
@@ -106,24 +106,26 @@ namespace ByElectionBalancer
                     Percentage(x => x.VotesScored > 0, results),
                     Percentage(x => x.VotesScored == 0, results));
 
-                Console.WriteLine("Votes won: min = {0}, max = {1}. Average = {2:0.##}, Mode = {3}",
-                    results.Min(x => x.VotesScored),
-                    results.Max(x => x.VotesScored),
-                    results.Average(x => x.VotesScored),
-                    String.Join(",", Modes(x => x.VotesScored, results)));
-
-                Console.WriteLine("Stolen by others: min = {0}, max = {1}. Average = {2:0.##}, Mode = {3}",
-                    results.Min(x => x.StolenFromThisDeck),
-                    results.Max(x => x.StolenFromThisDeck),
-                    results.Average(x => x.StolenFromThisDeck),
-                    String.Join(",", Modes(x => x.StolenFromThisDeck, results)));
+                PrintStats("Votes won", x => x.VotesScored, results);
+                PrintStats("Votes stolen", x => x.StolenFromThisDeck, results);
 
                 Console.WriteLine("");
             }
             Console.ReadKey();
         }
 
-        private static IEnumerable<int> Modes(Func<Result, int> predicate, IReadOnlyCollection<Result> results)
+        private static void PrintStats(string title, Func<Result, int> predicate, IEnumerable<Result> results)
+        {
+            Console.WriteLine("{0}:, min = {1}, max = {2}. Average = {3:0.##}, Mode = {4}",
+                title,
+                results.Min(predicate),
+                results.Max(predicate),
+                results.Average(predicate),
+                string.Join(",", Modes(predicate, results)));
+
+        }
+
+        private static IEnumerable<int> Modes(Func<Result, int> predicate, IEnumerable<Result> results)
         {
             var modes = results
                 .GroupBy(predicate)
