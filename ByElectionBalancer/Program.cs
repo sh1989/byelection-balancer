@@ -14,7 +14,8 @@ namespace ByElectionBalancer
                 new PublicAppearance(),
                 new DoorToDoor(),
                 new Interview(),
-                new Rally()
+                new Rally(),
+                new Debate() 
             };
 
             foreach (var suit in suits)

@@ -1,30 +1,30 @@
 ﻿
 namespace ByElectionBalancer.Data
 {
-    public class Interview : Suit
+    public class Debate : Suit
     {
         private static readonly Card[] cards =
         {
             new IncreasesVotesCard(6),
             new IncreasesVotesCard(5),
             new IncreasesVotesCard(4),
-            new IncreasesVotesCard(3),
-            new IncreasesVotesCard(3),
+            new IncreasesVotesCard(4),
 
-            new DecreasesVotesCard(7),
+            new DecreasesVotesCard(6),
             new DecreasesVotesCard(6),
             new DecreasesVotesCard(4),
-            new DecreasesVotesCard(3),
+            new DecreasesVotesCard(4),
             new DecreasesVotesCard(4),
 
             new OtherPlayerStealsVotesCard(5),
-            new OtherPlayerStealsVotesCard(2),
             new OtherPlayerStealsVotesCard(3),
-            new OtherPlayerStealsVotesCard(4)
+            new OtherPlayerStealsVotesCard(3),
+            new OtherPlayerStealsVotesCard(4),      
+            new OtherPlayerStealsVotesCard(3)
         };
 
-        public Interview()
-            : base("Interview", 7, cards)
+        public Debate()
+            : base("Debater", 7, cards)
         { }
     }
 }
